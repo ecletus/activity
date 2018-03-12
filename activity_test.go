@@ -39,7 +39,7 @@ type Product struct {
 
 func init() {
 	db = utils.TestDB()
-	Admin = admin.New(&qor.Config{DB: db})
+	Admin = admin.New(qor.NewConfig(db))
 	orderRes := Admin.AddResource(&Order{})
 	orderRes.Permission = roles.Allow(roles.CRUD, roles.Anyone)
 	productRes := Admin.AddResource(&Product{})
