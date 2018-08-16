@@ -10,11 +10,11 @@ import (
 	"testing"
 
 	"github.com/jinzhu/gorm"
-	"github.com/qor/admin"
-	"github.com/qor/l10n"
-	"github.com/qor/qor"
-	"github.com/qor/qor/test/utils"
-	"github.com/qor/roles"
+	"github.com/aghape/admin"
+	"github.com/aghape/l10n"
+	"github.com/aghape/aghape"
+	"github.com/aghape/aghape/test/utils"
+	"github.com/aghape/roles"
 	"github.com/theplant/testingutils"
 )
 
@@ -70,11 +70,11 @@ func TestActivityWithNotLocalization(t *testing.T) {
 
 	req, _ := http.Get(Server.URL + "/admin/orders/1/!qor_activities.json")
 	assertActivityEqual(t, req.Body, QorActivity{
-		Action:       "comment on",
-		Content:      "Activity Title",
-		Note:         "Activity Note",
-		ResourceID:   "1",
-		ResourceType: "orders",
+		Action:        "comment on",
+		Content:       "Activity Title",
+		Note:          "Activity Note",
+		ResourceID:    "1",
+		ResourceParam: "orders",
 	})
 
 	http.PostForm(Server.URL+"/admin/orders/1/!qor_activities/1/edit", url.Values{
@@ -84,11 +84,11 @@ func TestActivityWithNotLocalization(t *testing.T) {
 
 	req, _ = http.Get(Server.URL + "/admin/orders/1/!qor_activities.json")
 	assertActivityEqual(t, req.Body, QorActivity{
-		Action:       "comment on",
-		Content:      "Activity Title",
-		Note:         "Activity Note Changed",
-		ResourceID:   "1",
-		ResourceType: "orders",
+		Action:        "comment on",
+		Content:       "Activity Title",
+		Note:          "Activity Note Changed",
+		ResourceID:    "1",
+		ResourceParam: "orders",
 	})
 }
 
@@ -102,11 +102,11 @@ func TestActivityWithLocalization(t *testing.T) {
 
 	req, _ := http.Get(Server.URL + "/admin/products/1/!qor_activities.json")
 	assertActivityEqual(t, req.Body, QorActivity{
-		Action:       "comment on",
-		Content:      "Activity Title",
-		Note:         "Activity Note",
-		ResourceID:   "1::Global",
-		ResourceType: "products",
+		Action:        "comment on",
+		Content:       "Activity Title",
+		Note:          "Activity Note",
+		ResourceID:    "1::Global",
+		ResourceParam: "products",
 	})
 
 	http.PostForm(Server.URL+"/admin/products/1/!qor_activities/1/edit", url.Values{
@@ -116,11 +116,11 @@ func TestActivityWithLocalization(t *testing.T) {
 
 	req, _ = http.Get(Server.URL + "/admin/products/1/!qor_activities.json")
 	assertActivityEqual(t, req.Body, QorActivity{
-		Action:       "comment on",
-		Content:      "Activity Title",
-		Note:         "Activity Note Changed",
-		ResourceID:   "1::Global",
-		ResourceType: "products",
+		Action:        "comment on",
+		Content:       "Activity Title",
+		Note:          "Activity Note Changed",
+		ResourceID:    "1::Global",
+		ResourceParam: "products",
 	})
 }
 

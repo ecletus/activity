@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/jinzhu/gorm"
-	"github.com/qor/admin"
+	"github.com/aghape/admin"
 )
 
 func prepareGetActivitiesDB(context *admin.Context, result interface{}, types ...string) *gorm.DB {
@@ -49,16 +49,16 @@ func GetActivitiesCount(context *admin.Context, result interface{}, types ...str
 
 // CreateActivity creates an activity for this context
 func CreateActivity(context *admin.Context, activity *QorActivity, result interface{}) error {
-	var activityResource = context.Admin.GetResource("QorActivity")
+	var activityResource = context.Admin.GetResourceByID("QorActivity")
 
 	// fill in necessary activity fields
-	activity.ResourceType = context.Resource.ToParam()
+	activity.ResourceParam = context.Resource.ToParam()
 	activity.ResourceID = getPrimaryKey(context, result)
 	if context.CurrentUser != nil {
 		activity.CreatorName = context.CurrentUser.DisplayName()
 	}
 
-	return activityResource.CallSave(activity, context.Context)
+	return activityResource.Save(activity, context.Context)
 }
 
 func getPrimaryKey(context *admin.Context, record interface{}) string {
