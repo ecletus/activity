@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/jinzhu/gorm"
+	"github.com/moisespsena-go/aorm"
 	"github.com/aghape/admin"
 	"github.com/aghape/audited"
 	"github.com/aghape/media/asset_manager"
@@ -17,7 +17,7 @@ import (
 
 // QorActivity default model used to save resource's activities
 type QorActivity struct {
-	gorm.Model
+	aorm.Model
 	Action        string
 	Content       string `sql:"size:5000"`
 	Note          string `sql:"size:2000"`

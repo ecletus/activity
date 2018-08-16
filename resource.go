@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/jinzhu/gorm"
+	"github.com/moisespsena-go/aorm"
 	"github.com/aghape/admin"
 )
 
-func prepareGetActivitiesDB(context *admin.Context, result interface{}, types ...string) *gorm.DB {
+func prepareGetActivitiesDB(context *admin.Context, result interface{}, types ...string) *aorm.DB {
 	resourceID := getPrimaryKey(context, result)
 	db := context.GetDB().Order("id asc").Where("resource_id = ? AND resource_type = ?", resourceID, context.Resource.ToParam())
 

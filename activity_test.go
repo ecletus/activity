@@ -9,7 +9,7 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/jinzhu/gorm"
+	"github.com/moisespsena-go/aorm"
 	"github.com/aghape/admin"
 	"github.com/aghape/l10n"
 	"github.com/aghape/aghape"
@@ -18,7 +18,7 @@ import (
 	"github.com/theplant/testingutils"
 )
 
-var db *gorm.DB
+var db *aorm.DB
 var Admin *admin.Admin
 
 var (
@@ -27,12 +27,12 @@ var (
 )
 
 type Order struct {
-	gorm.Model
+	aorm.Model
 	Code string
 }
 
 type Product struct {
-	gorm.Model
+	aorm.Model
 	Code string
 	l10n.Locale
 }
