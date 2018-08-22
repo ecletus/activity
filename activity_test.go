@@ -12,8 +12,8 @@ import (
 	"github.com/moisespsena-go/aorm"
 	"github.com/aghape/admin"
 	"github.com/aghape/l10n"
-	"github.com/aghape/aghape"
-	"github.com/aghape/aghape/test/utils"
+	"github.com/aghape/core"
+	"github.com/aghape/core/test/utils"
 	"github.com/aghape/roles"
 	"github.com/theplant/testingutils"
 )
@@ -39,7 +39,7 @@ type Product struct {
 
 func init() {
 	db = utils.TestDB()
-	Admin = admin.New(qor.NewConfig(db))
+	Admin = admin.New(core.NewConfig(db))
 	orderRes := Admin.AddResource(&Order{})
 	orderRes.Permission = roles.Allow(roles.CRUD, roles.Anyone)
 	productRes := Admin.AddResource(&Product{})

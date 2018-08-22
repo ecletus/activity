@@ -9,9 +9,9 @@ import (
 	"github.com/aghape/admin"
 	"github.com/aghape/audited"
 	"github.com/aghape/media/asset_manager"
-	"github.com/aghape/aghape"
-	"github.com/aghape/aghape/resource"
-	"github.com/aghape/aghape/utils"
+	"github.com/aghape/core"
+	"github.com/aghape/core/resource"
+	"github.com/aghape/core/utils"
 	"github.com/aghape/validations"
 )
 
@@ -38,17 +38,17 @@ func Register(res *admin.Resource) {
 		RawFieldFilter:  map[string]interface{}{"ResourceParam": res.Param},
 		ParentFieldName: "ResourceID",
 	}, &QorActivity{}, &admin.Config{Invisible: false})
-	activityResource.Meta(&admin.Meta{Name: "Action", Type: "hidden", Valuer: func(value interface{}, ctx *qor.Context) interface{} {
+	activityResource.Meta(&admin.Meta{Name: "Action", Type: "hidden", Valuer: func(value interface{}, ctx *core.Context) interface{} {
 		act := value.(*QorActivity)
 		if act.Action == "" {
 			act.Action = "comment on"
 		}
 		return activityResource.GetAdmin().T(ctx, "activity."+act.Action, act.Action)
 	}})
-	activityResource.Meta(&admin.Meta{Name: "UpdatedAt", Type: "hidden", Valuer: func(value interface{}, ctx *qor.Context) interface{} {
+	activityResource.Meta(&admin.Meta{Name: "UpdatedAt", Type: "hidden", Valuer: func(value interface{}, ctx *core.Context) interface{} {
 		return utils.FormatTime(value.(*QorActivity).UpdatedAt, "Jan 2 15:04", ctx)
 	}})
-	activityResource.Meta(&admin.Meta{Name: "URL", Valuer: func(value interface{}, ctx *qor.Context) interface{} {
+	activityResource.Meta(&admin.Meta{Name: "URL", Valuer: func(value interface{}, ctx *core.Context) interface{} {
 		return strings.Join([]string{res.GetContextURI(ctx, ""), "!" + activityResource.ToParam(), strconv.Itoa(int(value.(*QorActivity).ID)), "edit"}, "/")
 	}})
 
@@ -61,7 +61,7 @@ func Register(res *admin.Resource) {
 	activityResource.Meta(&admin.Meta{Name: "Note", Type: "string", Resource: assetManager})
 	activityResource.EditAttrs("Action", "Content", "Note")
 	activityResource.ShowAttrs("ID", "Action", "Content", "Note", "URL", "UpdatedAt", "CreatorName")
-	activityResource.AddValidator(func(record interface{}, metaValues *resource.MetaValues, context *qor.Context) error {
+	activityResource.AddValidator(func(record interface{}, metaValues *resource.MetaValues, context *core.Context) error {
 		if meta := metaValues.Get("Content"); meta != nil {
 			if name := utils.ToString(meta.Value); strings.TrimSpace(name) == "" {
 				return validations.Failed(record, "Content", "Content can't be blank")
