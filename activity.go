@@ -2,22 +2,20 @@ package activity
 
 import (
 	"fmt"
-	"strconv"
 	"strings"
 
-	"github.com/moisespsena-go/aorm"
 	"github.com/aghape/admin"
-	"github.com/aghape/audited"
-	"github.com/aghape/media/asset_manager"
 	"github.com/aghape/core"
 	"github.com/aghape/core/resource"
 	"github.com/aghape/core/utils"
+	"github.com/aghape/media/asset_manager"
 	"github.com/aghape/validations"
+	"github.com/moisespsena-go/aorm"
 )
 
 // QorActivity default model used to save resource's activities
 type QorActivity struct {
-	aorm.Model
+	aorm.AuditedModel
 	Action        string
 	Content       string `sql:"size:5000"`
 	Note          string `sql:"size:2000"`
@@ -25,7 +23,6 @@ type QorActivity struct {
 	ResourceParam string
 	ResourceID    string
 	CreatorName   string
-	audited.AuditedModel
 }
 
 // Register register activity feature for an qor resource
@@ -49,7 +46,7 @@ func Register(res *admin.Resource) {
 		return utils.FormatTime(value.(*QorActivity).UpdatedAt, "Jan 2 15:04", ctx)
 	}})
 	activityResource.Meta(&admin.Meta{Name: "URL", Valuer: func(value interface{}, ctx *core.Context) interface{} {
-		return strings.Join([]string{res.GetContextURI(ctx, ""), "!" + activityResource.ToParam(), strconv.Itoa(int(value.(*QorActivity).ID)), "edit"}, "/")
+		return strings.Join([]string{res.GetContextURI(ctx, ""), "!" + activityResource.ToParam(), value.(*QorActivity).ID, "edit"}, "/")
 	}})
 
 	assetManager := res.GetResourceByID("AssetManager")
