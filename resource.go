@@ -58,7 +58,7 @@ func CreateActivity(context *admin.Context, activity *QorActivity, result interf
 		activity.CreatorName = context.CurrentUser.DisplayName()
 	}
 
-	return activityResource.Save(activity, context.Context)
+	return activityResource.Crud(context.Context).Create(activity)
 }
 
 func getPrimaryKey(context *admin.Context, record interface{}) string {

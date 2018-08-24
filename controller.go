@@ -74,7 +74,7 @@ func (ctrl controller) UpdateActivity(context *admin.Context) {
 	context.AddError(err)
 	if !context.HasError() {
 		if context.AddError(c.Resource.Decode(c.Context, result)); !context.HasError() {
-			context.AddError(context.Resource.Save(result, c.Context))
+			context.AddError(context.Resource.Crud(c.Context).Update(result))
 		}
 	}
 
