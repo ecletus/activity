@@ -10,11 +10,11 @@ import (
 	"testing"
 
 	"github.com/moisespsena-go/aorm"
-	"github.com/aghape/admin"
-	"github.com/aghape/l10n"
-	"github.com/aghape/core"
-	"github.com/aghape/core/test/utils"
-	"github.com/aghape/roles"
+	"github.com/ecletus/admin"
+	"github.com/ecletus/l10n"
+	"github.com/ecletus/core"
+	"github.com/ecletus/core/test/utils"
+	"github.com/ecletus/roles"
 	"github.com/theplant/testingutils"
 )
 

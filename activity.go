@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/aghape/admin"
-	"github.com/aghape/core"
-	"github.com/aghape/core/resource"
-	"github.com/aghape/core/utils"
-	"github.com/aghape/media/asset_manager"
-	"github.com/aghape/validations"
+	"github.com/ecletus/admin"
+	"github.com/ecletus/core"
+	"github.com/ecletus/core/resource"
+	"github.com/ecletus/core/utils"
+	"github.com/ecletus/media/asset_manager"
+	"github.com/ecletus/validations"
 	"github.com/moisespsena-go/aorm"
 )
 

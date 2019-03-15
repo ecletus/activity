@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/moisespsena-go/aorm"
-	"github.com/aghape/admin"
+	"github.com/ecletus/admin"
 )
 
 func prepareGetActivitiesDB(context *admin.Context, result interface{}, types ...string) *aorm.DB {
