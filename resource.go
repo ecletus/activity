@@ -54,8 +54,8 @@ func CreateActivity(context *admin.Context, activity *QorActivity, result interf
 	// fill in necessary activity fields
 	activity.ResourceParam = context.Resource.ToParam()
 	activity.ResourceID = getPrimaryKey(context, result)
-	if context.CurrentUser != nil {
-		activity.CreatorName = context.CurrentUser.DisplayName()
+	if user := context.CurrentUser(); user != nil {
+		activity.CreatorName = user.DisplayName()
 	}
 
 	return activityResource.Crud(context.Context).Create(activity)
