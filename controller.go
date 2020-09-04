@@ -66,12 +66,18 @@ func (ctrl controller) CreateActivity(context *admin.Context) {
 
 func (ctrl controller) UpdateActivity(context *admin.Context) {
 	c := context.Admin.NewContext(context.Writer, context.Request)
-	c.ResourceID = context.URLParam(ctrl.ActivityResource.ParamIDName())
 	c.Resource = ctrl.ActivityResource
-	c.Searcher = &admin.Searcher{Context: c}
-	result, err := c.FindOne()
-
-	context.AddError(err)
+	var (
+		err error
+		result interface{}
+	)
+	if c.ResourceID, err = c.Resource.ParseID(context.URLParam(ctrl.ActivityResource.ParamIDName())); err != nil {
+		context.AddError(err)
+	} else {
+		c.Searcher = &admin.Searcher{Context: c}
+		result, err = c.FindOne()
+		context.AddError(err)
+	}
 	if !context.HasError() {
 		if context.AddError(c.Resource.Decode(c.Context, result)); !context.HasError() {
 			context.AddError(context.Resource.Crud(c.Context).Update(result))

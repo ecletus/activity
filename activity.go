@@ -46,7 +46,7 @@ func Register(res *admin.Resource) {
 		return utils.FormatTime(value.(*QorActivity).UpdatedAt, "Jan 2 15:04", ctx)
 	}})
 	activityResource.Meta(&admin.Meta{Name: "URL", Valuer: func(value interface{}, ctx *core.Context) interface{} {
-		return strings.Join([]string{res.GetContextURI(ctx, ""), "!" + activityResource.ToParam(), value.(*QorActivity).ID, "edit"}, "/")
+		return strings.Join([]string{res.GetContextURI(ctx, nil), "!" + activityResource.ToParam(), value.(*QorActivity).ID.String(), "edit"}, "/")
 	}})
 
 	assetManager := res.GetResourceByID("AssetManager")
@@ -77,7 +77,7 @@ func Register(res *admin.Resource) {
 		return GetActivitiesCount(context, context.Result)
 	})
 
-	router := res.ObjectRouter
+	router := res.ItemRouter
 	ctrl := controller{ActivityResource: activityResource}
 	router.Get("/!qor_activities", ctrl.GetActivity)
 	router.Post("/!qor_activities", ctrl.CreateActivity)

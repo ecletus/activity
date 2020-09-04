@@ -10,7 +10,7 @@ import (
 
 func prepareGetActivitiesDB(context *admin.Context, result interface{}, types ...string) *aorm.DB {
 	resourceID := getPrimaryKey(context, result)
-	db := context.GetDB().Order("id asc").Where("resource_id = ? AND resource_type = ?", resourceID, context.Resource.ToParam())
+	db := context.DB().Order("id asc").Where("resource_id = ? AND resource_type = ?", resourceID, context.Resource.ToParam())
 
 	var inTypes, notInTypes []string
 	for _, t := range types {
@@ -62,7 +62,7 @@ func CreateActivity(context *admin.Context, activity *QorActivity, result interf
 }
 
 func getPrimaryKey(context *admin.Context, record interface{}) string {
-	db := context.GetDB()
+	db := context.DB()
 
 	var primaryValues []string
 	for _, field := range db.NewScope(record).PrimaryFields() {
